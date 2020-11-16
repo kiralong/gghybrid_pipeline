@@ -2,7 +2,8 @@
 ###########gghybrid example code##############################################
 ##############################################################################
 
-############Richard Ian Bailey 17 April 2018##################################
+#Original code written by Richard Ian Bailey 17 April 2018#
+#Adapted code viewed here written by Kira Long and Angel Rivera-Colon
 
 #Install the package from GitHub#
 #install.packages("devtools")
@@ -40,9 +41,9 @@ library(data.table)
 
 #Set working directory
 #Kira's labtop
-#setwd("/Users/kiraroo/Google Drive/Bioinformatics/Candidate_Genes/GGhybrid/Enrichment_analysis/")
+#setwd("/Users/kira/Google Drive/Bioinformatics/Candidate_Genes/GGhybrid/Enrichment_analysis/")
 #UIUC Campus Cluster
-setwd("/projects/aces/kira2/stacks_ref_map/ref_map_Mar30_2020/cline_analysis/gghybrid/2020_October_15_enrichment")
+setwd("/projects/aces/kira/stacks_ref_map/ref_map_Mar30_2020/cline_analysis/gghybrid/2020_October_15_enrichment")
 
 #Read in the data file (This is the simplest file format for reading in)#
 
@@ -99,7 +100,7 @@ hindlabel= esth(data.prep.object = prepdata$data.prep,
                 #nitt=10000,burnin=5000) #original
                 #nitt=100,burnin=10) #For testing that everything is running
 
-#The plots ('plot.ind' and 'plot.col' options) are optional. They plot accepted posterior hybrid 
+#The plots ('plot.ind' and 'plot.col' options) are optional. They plot accepted posterior hybrid
 #index values in real time, in this case for 5 randomly chosen individuals.
 
 #'esth' has more functionality - this above just shows the basics#
@@ -124,7 +125,7 @@ par(mar=c(5,5,4,5)) #To resize the margins of the graph for hybrid index
 abc = plot_h(data=hindlabel$hi[c("02SS","05RO","06QP","08RU","09PR","10CG")],#Subset of POPIDs#
              test.subject=hindlabel$test.subject,
              mean.h.by="POPID",			#Calculate the mean hybrid index for each value of the "POPID" column#
-             sort.by=c("mean_h","POPID","h_posterior_mode"),	#Order test subjects along the x axis by the mean hybrid 
+             sort.by=c("mean_h","POPID","h_posterior_mode"),	#Order test subjects along the x axis by the mean hybrid
              #index calculated above and also by individual hybrid index#
              col.group="POPID",
              group.sep="POPID",
@@ -170,10 +171,10 @@ gc1=ggcline(
   #nitt = 10000, burnin = 5000, print.k = 50) #original
   nitt = 50000, burnin = 10000, print.k = 50)
 
-#Again the real-time plots are optional. Open circles are parameter v (width), 
+#Again the real-time plots are optional. Open circles are parameter v (width),
 #'plus' symbols are logit(centre). centre ranges from 0 to 1 (the value of the hybrid index
 #at which allele frequencies for the locus are halfway between the parental values).
-#The null value for centre is 0.5, but logit(centre) is plotted here to 
+#The null value for centre is 0.5, but logit(centre) is plotted here to
 #try and improve clarity. logit(centre) ranges from -Inf to Inf and the null value is 0.
 
 #Take a look#
@@ -188,7 +189,7 @@ SNP_labels <- read.delim("./snp_chromosome_coordinates_r50.tsv",header = FALSE,s
 
 #Loop over the desired SNPs you want to plot, this will plot them all in a single pdf
 for (row_index in 1:nrow(SNP_labels)){
-  locus_of_interest <- SNP_labels[row_index,]$V1 #pulling out all the locus IDs 
+  locus_of_interest <- SNP_labels[row_index,]$V1 #pulling out all the locus IDs
   chromosome <- SNP_labels[row_index,]$V2 #Pulling out all the region names for plotting
   basepair <- SNP_labels[row_index,]$V3 #Pulling out the basepair for labeling
   par(mar=c(5,5,4,1)) #set margins of graphing space of cline graph
@@ -226,6 +227,6 @@ write.table(prepdata$locus.data,"locus_clines_r50.txt",quote = FALSE, row.names 
 write.table(hindlabel,file = "HI_table_r50.txt",quote = FALSE, row.names = FALSE)
 write.table(gc1,file = "cline_table_r50.txt",quote = FALSE, row.names = FALSE)
 
-#These functions have more options than shown here, and there are also possibilities for 
+#These functions have more options than shown here, and there are also possibilities for
 #pooling or fixing parameters in a variety of different ways,
 #followed by model comparison of pairs of models using the 'compare.models' function.
